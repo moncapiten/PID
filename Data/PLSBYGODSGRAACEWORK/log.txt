@@ -1,0 +1,168 @@
+190641 >>> ------------------- 32.00 C - Ret ----------------------
+190641 >>> Changing temperature to 32.00 C - Waiting for stabilization - Return Leg
+190641 >>> IV Measurement - T = 32.00 C - Pull number 0 - Return Leg
+190643 >>> Waiting for next measurement at T = 32.00 C - Return Leg
+190653 >>> IV Measurement - T = 32.00 C - Pull number 1 - Return Leg
+190655 >>> Waiting for next measurement at T = 32.00 C - Return Leg
+190705 >>> IV Measurement - T = 32.00 C - Pull number 2 - Return Leg
+190707 >>> ------------------- 31.00 C - Ret ----------------------
+190707 >>> Changing temperature to 31.00 C - Waiting for stabilization - Return Leg
+190707 >>> IV Measurement - T = 31.00 C - Pull number 0 - Return Leg
+190709 >>> Waiting for next measurement at T = 31.00 C - Return Leg
+190719 >>> IV Measurement - T = 31.00 C - Pull number 1 - Return Leg
+190721 >>> Waiting for next measurement at T = 31.00 C - Return Leg
+190731 >>> IV Measurement - T = 31.00 C - Pull number 2 - Return Leg
+190733 >>> ------------------- 30.00 C - Ret ----------------------
+190733 >>> Changing temperature to 30.00 C - Waiting for stabilization - Return Leg
+190733 >>> IV Measurement - T = 30.00 C - Pull number 0 - Return Leg
+190735 >>> Waiting for next measurement at T = 30.00 C - Return Leg
+190745 >>> IV Measurement - T = 30.00 C - Pull number 1 - Return Leg
+190747 >>> Waiting for next measurement at T = 30.00 C - Return Leg
+190757 >>> IV Measurement - T = 30.00 C - Pull number 2 - Return Leg
+190759 >>> ------------------- 29.00 C - Ret ----------------------
+190759 >>> Changing temperature to 29.00 C - Waiting for stabilization - Return Leg
+190759 >>> IV Measurement - T = 29.00 C - Pull number 0 - Return Leg
+190801 >>> Waiting for next measurement at T = 29.00 C - Return Leg
+190811 >>> IV Measurement - T = 29.00 C - Pull number 1 - Return Leg
+190813 >>> Waiting for next measurement at T = 29.00 C - Return Leg
+190823 >>> IV Measurement - T = 29.00 C - Pull number 2 - Return Leg
+190825 >>> ------------------- 28.00 C - Ret ----------------------
+190825 >>> Changing temperature to 28.00 C - Waiting for stabilization - Return Leg
+190825 >>> IV Measurement - T = 28.00 C - Pull number 0 - Return Leg
+190827 >>> Waiting for next measurement at T = 28.00 C - Return Leg
+190837 >>> IV Measurement - T = 28.00 C - Pull number 1 - Return Leg
+190839 >>> Waiting for next measurement at T = 28.00 C - Return Leg
+190849 >>> IV Measurement - T = 28.00 C - Pull number 2 - Return Leg
+190851 >>> ------------------- 27.00 C - Ret ----------------------
+190851 >>> Changing temperature to 27.00 C - Waiting for stabilization - Return Leg
+190851 >>> IV Measurement - T = 27.00 C - Pull number 0 - Return Leg
+190853 >>> Waiting for next measurement at T = 27.00 C - Return Leg
+190903 >>> IV Measurement - T = 27.00 C - Pull number 1 - Return Leg
+190905 >>> Waiting for next measurement at T = 27.00 C - Return Leg
+190915 >>> IV Measurement - T = 27.00 C - Pull number 2 - Return Leg
+190917 >>> ------------------- 26.00 C - Ret ----------------------
+190917 >>> Changing temperature to 26.00 C - Waiting for stabilization - Return Leg
+190917 >>> IV Measurement - T = 26.00 C - Pull number 0 - Return Leg
+190919 >>> Waiting for next measurement at T = 26.00 C - Return Leg
+190929 >>> IV Measurement - T = 26.00 C - Pull number 1 - Return Leg
+190931 >>> Waiting for next measurement at T = 26.00 C - Return Leg
+190941 >>> IV Measurement - T = 26.00 C - Pull number 2 - Return Leg
+190943 >>> ------------------- 25.00 C - Ret ----------------------
+190943 >>> Changing temperature to 25.00 C - Waiting for stabilization - Return Leg
+190943 >>> IV Measurement - T = 25.00 C - Pull number 0 - Return Leg
+190945 >>> Waiting for next measurement at T = 25.00 C - Return Leg
+190955 >>> IV Measurement - T = 25.00 C - Pull number 1 - Return Leg
+190957 >>> Waiting for next measurement at T = 25.00 C - Return Leg
+191007 >>> IV Measurement - T = 25.00 C - Pull number 2 - Return Leg
+191009 >>> ------------------- 24.00 C - Ret ----------------------
+191009 >>> Changing temperature to 24.00 C - Waiting for stabilization - Return Leg
+191009 >>> IV Measurement - T = 24.00 C - Pull number 0 - Return Leg
+191011 >>> Waiting for next measurement at T = 24.00 C - Return Leg
+191021 >>> IV Measurement - T = 24.00 C - Pull number 1 - Return Leg
+191023 >>> Waiting for next measurement at T = 24.00 C - Return Leg
+191033 >>> IV Measurement - T = 24.00 C - Pull number 2 - Return Leg
+191035 >>> ------------------- 23.00 C - Ret ----------------------
+191035 >>> Changing temperature to 23.00 C - Waiting for stabilization - Return Leg
+191035 >>> IV Measurement - T = 23.00 C - Pull number 0 - Return Leg
+191037 >>> Waiting for next measurement at T = 23.00 C - Return Leg
+191047 >>> IV Measurement - T = 23.00 C - Pull number 1 - Return Leg
+191049 >>> Waiting for next measurement at T = 23.00 C - Return Leg
+191059 >>> IV Measurement - T = 23.00 C - Pull number 2 - Return Leg
+191101 >>> ------------------- 22.00 C - Ret ----------------------
+191101 >>> Changing temperature to 22.00 C - Waiting for stabilization - Return Leg
+191101 >>> IV Measurement - T = 22.00 C - Pull number 0 - Return Leg
+191103 >>> Waiting for next measurement at T = 22.00 C - Return Leg
+191113 >>> IV Measurement - T = 22.00 C - Pull number 1 - Return Leg
+191115 >>> Waiting for next measurement at T = 22.00 C - Return Leg
+191125 >>> IV Measurement - T = 22.00 C - Pull number 2 - Return Leg
+191127 >>> ------------------- 21.00 C - Ret ----------------------
+191127 >>> Changing temperature to 21.00 C - Waiting for stabilization - Return Leg
+191127 >>> IV Measurement - T = 21.00 C - Pull number 0 - Return Leg
+191129 >>> Waiting for next measurement at T = 21.00 C - Return Leg
+191139 >>> IV Measurement - T = 21.00 C - Pull number 1 - Return Leg
+191141 >>> Waiting for next measurement at T = 21.00 C - Return Leg
+191151 >>> IV Measurement - T = 21.00 C - Pull number 2 - Return Leg
+191153 >>> ------------------- 20.00 C - Ret ----------------------
+191153 >>> Changing temperature to 20.00 C - Waiting for stabilization - Return Leg
+191153 >>> IV Measurement - T = 20.00 C - Pull number 0 - Return Leg
+191155 >>> Waiting for next measurement at T = 20.00 C - Return Leg
+191205 >>> IV Measurement - T = 20.00 C - Pull number 1 - Return Leg
+191207 >>> Waiting for next measurement at T = 20.00 C - Return Leg
+191217 >>> IV Measurement - T = 20.00 C - Pull number 2 - Return Leg
+191219 >>> ------------------- 19.00 C - Ret ----------------------
+191219 >>> Changing temperature to 19.00 C - Waiting for stabilization - Return Leg
+191219 >>> IV Measurement - T = 19.00 C - Pull number 0 - Return Leg
+191221 >>> Waiting for next measurement at T = 19.00 C - Return Leg
+191231 >>> IV Measurement - T = 19.00 C - Pull number 1 - Return Leg
+191233 >>> Waiting for next measurement at T = 19.00 C - Return Leg
+191243 >>> IV Measurement - T = 19.00 C - Pull number 2 - Return Leg
+191245 >>> ------------------- 18.00 C - Ret ----------------------
+191245 >>> Changing temperature to 18.00 C - Waiting for stabilization - Return Leg
+191245 >>> IV Measurement - T = 18.00 C - Pull number 0 - Return Leg
+191247 >>> Waiting for next measurement at T = 18.00 C - Return Leg
+191257 >>> IV Measurement - T = 18.00 C - Pull number 1 - Return Leg
+191258 >>> Waiting for next measurement at T = 18.00 C - Return Leg
+191308 >>> IV Measurement - T = 18.00 C - Pull number 2 - Return Leg
+191310 >>> ------------------- 17.00 C - Ret ----------------------
+191310 >>> Changing temperature to 17.00 C - Waiting for stabilization - Return Leg
+191310 >>> IV Measurement - T = 17.00 C - Pull number 0 - Return Leg
+191312 >>> Waiting for next measurement at T = 17.00 C - Return Leg
+191322 >>> IV Measurement - T = 17.00 C - Pull number 1 - Return Leg
+191324 >>> Waiting for next measurement at T = 17.00 C - Return Leg
+191334 >>> IV Measurement - T = 17.00 C - Pull number 2 - Return Leg
+191336 >>> ------------------- 16.00 C - Ret ----------------------
+191336 >>> Changing temperature to 16.00 C - Waiting for stabilization - Return Leg
+191336 >>> IV Measurement - T = 16.00 C - Pull number 0 - Return Leg
+191338 >>> Waiting for next measurement at T = 16.00 C - Return Leg
+191348 >>> IV Measurement - T = 16.00 C - Pull number 1 - Return Leg
+191350 >>> Waiting for next measurement at T = 16.00 C - Return Leg
+191400 >>> IV Measurement - T = 16.00 C - Pull number 2 - Return Leg
+191402 >>> ------------------- 15.00 C - Ret ----------------------
+191402 >>> Changing temperature to 15.00 C - Waiting for stabilization - Return Leg
+191402 >>> IV Measurement - T = 15.00 C - Pull number 0 - Return Leg
+191404 >>> Waiting for next measurement at T = 15.00 C - Return Leg
+191414 >>> IV Measurement - T = 15.00 C - Pull number 1 - Return Leg
+191416 >>> Waiting for next measurement at T = 15.00 C - Return Leg
+191426 >>> IV Measurement - T = 15.00 C - Pull number 2 - Return Leg
+191428 >>> ------------------- 14.00 C - Ret ----------------------
+191428 >>> Changing temperature to 14.00 C - Waiting for stabilization - Return Leg
+191428 >>> IV Measurement - T = 14.00 C - Pull number 0 - Return Leg
+191430 >>> Waiting for next measurement at T = 14.00 C - Return Leg
+191440 >>> IV Measurement - T = 14.00 C - Pull number 1 - Return Leg
+191442 >>> Waiting for next measurement at T = 14.00 C - Return Leg
+191452 >>> IV Measurement - T = 14.00 C - Pull number 2 - Return Leg
+191454 >>> ------------------- 13.00 C - Ret ----------------------
+191454 >>> Changing temperature to 13.00 C - Waiting for stabilization - Return Leg
+191454 >>> IV Measurement - T = 13.00 C - Pull number 0 - Return Leg
+191456 >>> Waiting for next measurement at T = 13.00 C - Return Leg
+191506 >>> IV Measurement - T = 13.00 C - Pull number 1 - Return Leg
+191508 >>> Waiting for next measurement at T = 13.00 C - Return Leg
+191518 >>> IV Measurement - T = 13.00 C - Pull number 2 - Return Leg
+191520 >>> ------------------- 12.00 C - Ret ----------------------
+191520 >>> Changing temperature to 12.00 C - Waiting for stabilization - Return Leg
+191520 >>> IV Measurement - T = 12.00 C - Pull number 0 - Return Leg
+191522 >>> Waiting for next measurement at T = 12.00 C - Return Leg
+191532 >>> IV Measurement - T = 12.00 C - Pull number 1 - Return Leg
+191534 >>> Waiting for next measurement at T = 12.00 C - Return Leg
+191544 >>> IV Measurement - T = 12.00 C - Pull number 2 - Return Leg
+191546 >>> ------------------- 11.00 C - Ret ----------------------
+191546 >>> Changing temperature to 11.00 C - Waiting for stabilization - Return Leg
+191546 >>> IV Measurement - T = 11.00 C - Pull number 0 - Return Leg
+191548 >>> Waiting for next measurement at T = 11.00 C - Return Leg
+191558 >>> IV Measurement - T = 11.00 C - Pull number 1 - Return Leg
+191600 >>> Waiting for next measurement at T = 11.00 C - Return Leg
+191610 >>> IV Measurement - T = 11.00 C - Pull number 2 - Return Leg
+191612 >>> ------------------- 10.00 C - Ret ----------------------
+191612 >>> Changing temperature to 10.00 C - Waiting for stabilization - Return Leg
+191612 >>> IV Measurement - T = 10.00 C - Pull number 0 - Return Leg
+191614 >>> Waiting for next measurement at T = 10.00 C - Return Leg
+191624 >>> IV Measurement - T = 10.00 C - Pull number 1 - Return Leg
+191626 >>> Waiting for next measurement at T = 10.00 C - Return Leg
+191636 >>> IV Measurement - T = 10.00 C - Pull number 2 - Return Leg
+191638 >>> ------------------- 32.00 C - Ret ----------------------
+191638 >>> Changing temperature to 32.00 C - Waiting for stabilization - Return Leg
+191638 >>> IV Measurement - T = 32.00 C - Pull number 0 - Return Leg
+191641 >>> Waiting for next measurement at T = 32.00 C - Return Leg
+191651 >>> IV Measurement - T = 32.00 C - Pull number 1 - Return Leg
+191653 >>> Waiting for next measurement at T = 32.00 C - Return Leg
+191703 >>> IV Measurement - T = 32.00 C - Pull number 2 - Return Leg
