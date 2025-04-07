@@ -87,40 +87,32 @@ counter * 50 * 2 % 50 voltages, 2 directions (V_go and V_return)
 
 %plot3()
 
-plot3(temperatures, voltages, currents, 'o')
+plot3(temperatures, voltages, currents, 'ob', 'DisplayName', 'Raw Data')
 hold on
 
 X = [voltages, temperatures];
 size(X)
-p0 = [1.117, 2.5e-3];
+p0 = [2.5e-3, 1.117, 0.7]; % [A, Eg, Vth]
+%p0 = [33, 6e-9]; % [Vt, Is]
 
+I_sym = complete_Shockley(p0, X);
+%I_sym = shockley3D(p0, X);
+%plot3(X(:, 2), X(:, 1), I_sym, 'vg', 'DisplayName', 'p0')
 
-I_sym = shockley3D(p0, X);
-plot3(X(:, 2), X(:, 1), I_sym, 'vg')
-
-beta = nlinfit(X, currents, @shockley3D, p0);
-beta
-I_fit = shockley3D(beta, X);
-%plot3(X(:, 2), X(:, 1), I_fit, 'vk')
-
-
-
-
-%p0 = [33, 6e-9];
-
-
-
-%I_exp = shockley(p0, Vd_go); % A
-%plot(Vd_go, I_exp, '--r', 'LineWidth', 2)
-
-
-%beta = nlinfit(Vd_go, Id_go, @shockley, p0)
-
-%I_exp = shockley(beta, Vd_go); % A
-%plot(Vd_go, I_exp, '--g', 'LineWidth', 2)
-
-
+beta = nlinfit(X, currents, @complete_Shockley, p0);
 %beta
+I_fit = complete_Shockley(beta, X);
+
+plot3(X(:, 2), X(:, 1), I_fit, 'or', 'DisplayName', 'Fitted Model')
+
+legend()
+
+xlabel('Temperature (C)')
+ylabel('Voltage (V)')
+zlabel('Current (A)')
+title('Expected Current vs Voltage for Different Temperatures')
+
+
 
 
 
@@ -144,20 +136,7 @@ function filename = getFileName(Temp, Vcc, pull, T_direction)
 end
 
 
-%{
-function [I] = shockley(V, Vt, Is)
-    % Shockley diode equation
-    % Vt = k*T/q
-    % Is = saturation current
-    % V = voltage across the diode
-    % T = temperature in Kelvin
-    k = 1.380649e-23; % J/K
-    q = 1.602176634e-19; % C
-%    Vt = k*T/q; % V
-    n = 1; % ideality factor (assumed to be 1 for simplicity)
-    I = Is .* (exp(V./n.*Vt) - 1); % A
-end
-%}
+
 
 function [I] = shockley(params, V)
     n = 2; % ideality factor
@@ -191,43 +170,17 @@ function [I] = shockley3D(params, X)
 end
 
 
-% calculate the saturation current for each temperature
 
-
-%Is = tempDependance(temperatures + 273.15, 2); % A
-
-%I_expected = shockley(voltages, 0.7, temperatures + 273.15, Is(1)); % A
-
-
-
-
-%for i = 1:length(temperatures)
-%    Is(i) = tempDependance(temperatures(i) + 273.15, 2); % A
-%end
-
-% calculate the expected current for each voltage and temperature
-%I_expected = zeros(length(voltages), length(temperatures));
-%for i = 1:length(voltages)
-%    for j = 1:length(temperatures)
-%        I_expected(i, j) = shockley(voltages(i), 0.7, temperatures(j) + 273.15, Is(j)); % A
-%    end
-%end
-
-%{
-% plot the expected current for each temperature
-figure
-hold on
-for i = 1:length(temperatures)
-    plot3(temperatures, voltages, I_expected(:, i), 'DisplayName', sprintf('T = %.2f °C', temperatures(i)), 'LineWidth', 1.5)
+function [I] = complete_Shockley(params, X) % params = [A, Eg, Vth]
+    vv = X(:, 1);
+    TT = X(:, 2);
+    n = 2;
+    k = 1.380649e-23; % J/K
+    q = 1.602176634e-19; % C
+    Is = params(1) .* TT.^2 .* exp(-params(2)/n*(k.*TT)); % A
+    Vt = k/q .* TT; % V
+    I = Is .* (exp(vv./(n.*params(3))) - 1); % A
 end
-xlabel('Temperature (C)')
-ylabel('Voltage (V)')
-zlabel('Current (A)')
-title('Epected Current vs Voltage for Different Temperatures')
-%legend('show')
-grid on
-hold off
-%}
 
-
+%beta(2) = Eg viene esatto 1.117? WTF???????????????????????
 
