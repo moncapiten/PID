@@ -4,7 +4,7 @@ close all
 clear all;
 
 
-dataPosition = '../../../Data/IV-T_dependence_20250404_100546/';
+dataPosition = '../../../Data/IV-T_dependence_20250408_110423/';
 
 temps = 16:1:70;
 
@@ -87,13 +87,13 @@ counter * 50 * 2 % 50 voltages, 2 directions (V_go and V_return)
 
 %plot3()
 
-plot3(temperatures, voltages, currents, 'ob', 'DisplayName', 'Raw Data')
+plot3(temperatures, voltages, abs(currents), 'ob', 'DisplayName', 'Raw Data')
 grid on
 grid minor
 hold on
 
 % set z log scale
-%set(gca, 'ZScale', 'log')
+set(gca, 'ZScale', 'log')
 
 %{
 X = [voltages, temperatures];
