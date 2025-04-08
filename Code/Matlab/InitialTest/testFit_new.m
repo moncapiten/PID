@@ -4,9 +4,9 @@ close all
 clear all;
 
 
-dataPosition = '../../../Data/IV-T_dependence_20250404_180103/';
+dataPosition = '../../../Data/IV-T_dependence_20250404_100546/';
 
-temps = 10:1:70;
+temps = 16:1:70;
 
 offsets = [-1, 5]; % V
 n_pulls = 2;
@@ -88,8 +88,14 @@ counter * 50 * 2 % 50 voltages, 2 directions (V_go and V_return)
 %plot3()
 
 plot3(temperatures, voltages, currents, 'ob', 'DisplayName', 'Raw Data')
+grid on
+grid minor
 hold on
 
+% set z log scale
+%set(gca, 'ZScale', 'log')
+
+%{
 X = [voltages, temperatures];
 size(X)
 p0 = [2.5e-3, 1.117, 0.7]; % [A, Eg, Vth]
@@ -115,7 +121,7 @@ title('Expected Current vs Voltage for Different Temperatures')
 
 
 
-
+%}
 
 
 
@@ -177,10 +183,11 @@ function [I] = complete_Shockley(params, X) % params = [A, Eg, Vth]
     n = 2;
     k = 1.380649e-23; % J/K
     q = 1.602176634e-19; % C
-    Is = params(1) .* TT.^2 .* exp(-params(2)/n*(k.*TT)); % A
+    Is = params(1) .* TT.^2 .* exp(-params(2)/(n*k.*TT)); % A
     Vt = k/q .* TT; % V
     I = Is .* (exp(vv./(n.*params(3))) - 1); % A
 end
 
 %beta(2) = Eg viene esatto 1.117? WTF???????????????????????
+
 
