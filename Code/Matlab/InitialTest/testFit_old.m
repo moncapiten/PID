@@ -4,9 +4,9 @@ close all
 clear all;
 
 
-dataPosition = '../../../Data/IV-T_dependence_20250404_180103/';
+dataPosition = '../../../Data/IV-T_dependence_20250404_100546/';
 
-temps = 10
+temps = 20
 %temps = 10:1:70;
 
 offsets = [-1, 5]; % V
@@ -93,21 +93,40 @@ errorbar(Vd_go, Id_go, -Err_Id_go/2, Err_Id_go/2, -Err_Vd_go/2, Err_Vd_go/2, 'o'
 
 
 
-p0 = [33, 6e-9];
+%p0 = [33, 6e-9];
 
 
 
-I_exp = shockley(p0, Vd_go); % A
-plot(Vd_go, I_exp, '--r', 'LineWidth', 2)
+%I_exp = shockley(p0, Vd_go); % A
+%plot(Vd_go, I_exp, '--r', 'LineWidth', 2)
 
 
-beta = nlinfit(Vd_go, Id_go, @shockley, p0)
+%beta = nlinfit(Vd_go, Id_go, @shockley, p0)
 
-I_exp = shockley(beta, Vd_go); % A
-plot(Vd_go, I_exp, '--g', 'LineWidth', 2)
+%I_exp = shockley(beta, Vd_go); % A
+%plot(Vd_go, I_exp, '--g', 'LineWidth', 2)
 
 
+p0 = [6e-9, 3/2, 1.117, 2 ]; % [I0, gam, Eg, n]
+
+
+temperatures = temperatures + 273.15; % K
+
+X = [voltages'; temperatures'];
+
+I0 = PN_model(p0, X); % A
+
+plot(X(1, :), I0, 'or', 'DisplayName', 'Fitted Model')
+%plot3(X(2, :), X(1, :), I0, 'vg', 'DisplayName', 'p0')
+
+
+beta = nlinfit(X, currents', @PN_model, p0, 'Options', statset('MaxIter', 1000));
+p0
 beta
+
+plot(X(1, :), PN_model(beta, X), 'vg', 'DisplayName', 'Fitted Model')
+
+
 
 
 
@@ -129,6 +148,41 @@ function filename = getFileName(Temp, Vcc, pull, T_direction)
     end
     filename = sprintf('IV_T%.2f_V%.2f_%.2f_%dPull_T%s', Temp, Vcc(1), Vcc(2), pull, T_direction);
 end
+
+
+
+
+
+function [I] = PN_model(params, X) % params = [I0, gam, Eg, n]
+    vv = X(1, :);
+    tt = X(2, :);
+
+    k = 8.8e-5; % J/K
+    Vt = 13e-3; % V
+%    Vt = k * tt / 1.602176634e-19 % V
+    Is = params(1) .* tt.^params(2) .* exp(-params(3)./(params(4).*k.*tt)); % A
+    swap_I = Is .* (exp(vv./(params(4).*Vt)) - 1); % A
+    I = swap_I; % A
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 %{

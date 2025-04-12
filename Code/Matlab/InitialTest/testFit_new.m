@@ -3,8 +3,16 @@ clc
 close all
 clear all;
 
+chooseDiode = 2; % 1: PN diode, 2: Schottky diode, 3: Zener diode 1, 4: Zener diode 2
 
-dataPosition = '../../../Data/IV-T_dependence_20250408_110423/';
+
+names = {'PN diode', 'Schottky diode', 'Zener diode 1', 'Zener diode 2'};
+filenames = { 'IV-T_dependence_20250404_100546/', 'IV-T_dependence_20250408_110423/', 'IV-T_dependence_20250408_124236/', 'IV-T_dependence_20250408_/' };
+dataPosition = strcat('../../../Data/', filenames{chooseDiode});
+%dataPosition = '../../../Data/IV-T_dependence_20250404_100546/';  % PN diode
+%dataPosition = '../../../Data/IV-T_dependence_20250408_110423/'; %Schottky diode
+%dataPosition = '../../../Data/IV-T_dependence_20250408_124236/'; % Zener diode 1
+%dataPosition = '../../../Data/IV-T_dependence_20250408_/'; % Zener diode 2
 
 temps = 16:1:70;
 
@@ -18,9 +26,6 @@ flag_return_V = true;
 voltages = [];
 temperatures = [];
 currents = [];
-%voltages = zeroes( 50 * 2 * 3 * 61 * 2, 1); % 50 voltages, 2 directions (V_go and V_return), 3 pulls, 61 temperatures, 2 directions (T_go and T_return)
-%temperatures = zeroes( 50 * 2 * 3 * 61 * 2, 1);
-%currents = zeroes( 50 * 2 * 3 * 61 * 2, 1);
 
 
 if flag_return_T
@@ -64,12 +69,7 @@ for T_direction = 1:ar_T_max
             currents = [currents ; Id_go ; Id_return];
 
 
-%            plot3(Td_go, Vd_go, Id_go, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'blue', 'MarkerEdgeColor', 'black')
-%            if first
-%                hold on
-%                first = false;
-%            end
-%            plot3(Td_return, Vd_return, Id_return, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'red', 'MarkerEdgeColor', 'black')
+
 
 
 
@@ -82,46 +82,94 @@ end
 counter * 50 * 2 % 50 voltages, 2 directions (V_go and V_return)
 
 
+
+
+temperatures = temperatures + 273.15; % C
+currents = currents * 1e6; % A
+
+
+X = [voltages'; temperatures'];
+
+%p0 = { { 2e-8, 3/2, 1.8, 2 }, { 2e-8, 2, 0.3, 2 }, {}, {} }; % [I0, gam, Eg, n] PN diode
+
+%p0 = [2e-8, 3/2, 1.8, 2 ]; % [I0, gam, Eg, n] PN diode
+%p0 = [2e-8, 2, 0.3, 2 ]; % [I0, gam, Esh, n] Schottky diode
+%p0 = [2e-8, 1.8, 1.8, 4 ]; % [I0, gam, Eg, n] Zener diode 1
+
+
+
+%beta = nlinfit(X, currents', @PN_model, p0, 'Options', statset('MaxIter', 1000));
+%beta = nlinfit(X, currents', @Schottky_model, p0, 'Options', statset('MaxIter', 1000));
+%beta
+switch chooseDiode
+    case 1
+        p0 = [2e-8, 3/2, 1.8, 2 ]; % [I0, gam, Eg, n] PN diode
+        beta = nlinfit(X, currents', @PN_model, p0, 'Options', statset('MaxIter', 1000));
+    case 2
+        p0 = [2e-8, 2, 0.3, 2 ]; % [I0, gam, Esh, n] Schottky diode
+        beta = nlinfit(X, currents', @Schottky_model, p0, 'Options', statset('MaxIter', 1000));
+    case 3
+        p0 = [2e-8, 1.8, 1.8, 4 ]; % [I0, gam, Eg, n] Zener diode 1
+        beta = nlinfit(X, currents', @Zener_model, p0, 'Options', statset('MaxIter', 1000));
+    case 4
+        p0 = [2e-8, 1.8, 1.8, 4 ]; % [I0, gam, Eg, n] Zener diode 2
+        beta = nlinfit(X, currents', @Zener_model, p0, 'Options', statset('MaxIter', 1000));
+end
+
+
+%I_fit = PN_model(beta, X);
+I_fit = Schottky_model(beta, X);
+
+
+
+
+
+
+t = tiledlayout(1, 2, "TileSpacing", "Tight", "Padding", "Compact");
+t1 = nexttile(t);
+
 %errorbar(Vd_go, Id_go, -Err_Id_go/2, Err_Id_go/2, -Err_Vd_go/2, Err_Vd_go/2, 'o', 'MarkerSize', 5, 'MarkerEdgeColor', 'blue')
-
-
-%plot3()
-
-plot3(temperatures, voltages, abs(currents), 'ob', 'DisplayName', 'Raw Data')
-grid on
-grid minor
+plot3(temperatures, voltages, (currents'), 'ob', 'DisplayName', 'Raw Data')             % Raw Data
 hold on
 
-% set z log scale
-set(gca, 'ZScale', 'log')
+%plot3(X(2, :), X(1, :), PN_model(p0, X), 'or', 'DisplayName', 'PN p0')                 % PN p0
+%plot3(X(2, :), X(1, :), Schottky_model(p0, X), 'vg', 'DisplayName', 'Schottky p0')     % Schottky p0
+%plot3(X(2, :), X(1, :), Zener_model(p0, X), 'k', 'DisplayName', 'Zener p0')            % Zener p0
 
-%{
-X = [voltages, temperatures];
-size(X)
-p0 = [2.5e-3, 1.117, 0.7]; % [A, Eg, Vth]
-%p0 = [33, 6e-9]; % [Vt, Is]
+plot3(X(2, :), X(1, :), (I_fit'), 'vr', 'DisplayName', 'Fitted Model')                  % Fitted Model
 
-I_sym = complete_Shockley(p0, X);
-%I_sym = shockley3D(p0, X);
-%plot3(X(:, 2), X(:, 1), I_sym, 'vg', 'DisplayName', 'p0')
 
-beta = nlinfit(X, currents, @complete_Shockley, p0);
-%beta
-I_fit = complete_Shockley(beta, X);
+hold off
+grid on
+grid minor
 
-plot3(X(:, 2), X(:, 1), I_fit, 'or', 'DisplayName', 'Fitted Model')
-
+xlabel('Temperature [K]', 'Interpreter', 'latex', 'FontSize', 14)
+ylabel('Voltage [V]', 'Interpreter', 'latex', 'FontSize', 14)
+zlabel('Current ($ \mathrm{ \mu A } $) ', 'Interpreter', 'latex', 'FontSize', 14)
+title('Linear Plot', 'Interpreter', 'latex', 'FontSize', 16)
 legend()
 
-xlabel('Temperature (C)')
-ylabel('Voltage (V)')
-zlabel('Current (A)')
-title('Expected Current vs Voltage for Different Temperatures')
 
 
+t2 = nexttile(t);
+plot3(temperatures, voltages, abs(currents'), 'ob', 'DisplayName', 'Raw Data')
+hold on
+plot3(X(2, :), X(1, :), abs(I_fit'), 'vr', 'DisplayName', 'Fitted Model')
+hold off
+grid on
+grid minor
+
+xlabel('Temperature [K]', 'Interpreter', 'latex', 'FontSize', 14)
+ylabel('Voltage [V]', 'Interpreter', 'latex', 'FontSize', 14)
+zlabel('Current ($ \mathrm{ \mu A } $) ', 'Interpreter', 'latex', 'FontSize', 14)
+title('Semilog Plot', 'Interpreter', 'latex', 'FontSize', 16)
+legend()
+set(gca, 'ZScale', 'log')
 
 
-%}
+title(t, strcat("IV-T curve for ", names{chooseDiode}), 'Interpreter', 'latex', 'FontSize', 18)
+
+
 
 
 
@@ -144,50 +192,38 @@ end
 
 
 
-function [I] = shockley(params, V)
-    n = 2; % ideality factor
-    I = params(2) .* ( exp(V./n*params(1)) - 1); % A
+
+function [I] = PN_model(params, X) % params = [I0, gam, Eg, n]
+    vv = X(1, :);
+    tt = X(2, :);
+
+    k = 8.617333e-5; % eV/K
+    Vt = 13e-3; % V
+%    Vt = k * tt / 1.602176634e-19 % V
+    Is = params(1) .* tt.^params(2) .* exp(-params(3)./(params(4).*k.*tt)); % A
+    I = Is .* (exp(vv./(params(4).*Vt)) - 1) * 1e6; % A
+%    I = swap_I * 1e9; % A
 end
 
+function [I] = Schottky_model(params, X) % params = [I0, gam, Esh, n]
+    vv = X(1, :);
+    tt = X(2, :);
 
-
-
-function [I] = tempDependance(Td, Eg, alpha)
-    % Temperature dependence of saturation current
-    k = 1.380649e-23; % J/K
-%    Eg = 1.117; % eV
-%    alpha = 2.5e-3; % A/K
-    Is = alpha * Td.^2 .* exp(-Eg/(k.*Td)); % A
-    I = Is; % return saturation current
+    k = 8.617333e-5; % eV/K
+    Vt = 13e-3; % V
+    Is = params(1) .* tt.^params(2) .* exp(-params(3)./(k.*tt)); % A
+    I = Is .* (exp(vv./(params(4).*Vt)) - 1) * 1e6; % A
+%    I = swap_I * 1e9; % A
 end
 
+function [I] = Zener_model(params, X) % params = [I0, gam, Eg, n]
+    vv = X(1, :);
+    tt = X(2, :);
 
-function [I] = shockley3D(params, X)
-    vv = X(:, 1);
-    tt = X(:, 2);
-    Is = tempDependance(tt, params(1), params(2));
-
-    k = 1.380649e-23; % J/K
-    q = 1.602176634e-19; % C
-    Vt = k/q .* tt; % V
-
-    I = shockley([Vt, Is], vv);
-
+    k = 8.617333e-5; % eV/K
+    Vt = 13e-3; % V
+    Is = params(1) .* tt.^params(2) .* exp(-params(3)./(params(4).*k.*tt)); % A
+    I = Is .* (exp(vv./(params(4).*Vt)) - 1) * 1e6; % A
 end
-
-
-
-function [I] = complete_Shockley(params, X) % params = [A, Eg, Vth]
-    vv = X(:, 1);
-    TT = X(:, 2);
-    n = 2;
-    k = 1.380649e-23; % J/K
-    q = 1.602176634e-19; % C
-    Is = params(1) .* TT.^2 .* exp(-params(2)/(n*k.*TT)); % A
-    Vt = k/q .* TT; % V
-    I = Is .* (exp(vv./(n.*params(3))) - 1); % A
-end
-
-%beta(2) = Eg viene esatto 1.117? WTF???????????????????????
 
 
