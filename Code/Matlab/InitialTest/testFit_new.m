@@ -3,7 +3,7 @@ clc
 close all
 clear all;
 
-chooseDiode = 2; % 1: PN diode, 2: Schottky diode, 3: Zener diode 1, 4: Zener diode 2
+chooseDiode = 4; % 1: PN diode, 2: Schottky diode, 3: Zener diode 1, 4: Zener diode 2
 
 
 names = {'PN diode', 'Schottky diode', 'Zener diode 1', 'Zener diode 2'};
@@ -90,7 +90,7 @@ currents = currents * 1e6; % A
 
 X = [voltages'; temperatures'];
 
-%p0 = { { 2e-8, 3/2, 1.8, 2 }, { 2e-8, 2, 0.3, 2 }, {}, {} }; % [I0, gam, Eg, n] PN diode
+p0 = { { 2e-8, 3/2, 1.8, 2 }, { 2e-8, 2, 0.3, 2 }, {}, {} }; % [I0, gam, Eg, n] PN diode
 
 %p0 = [2e-8, 3/2, 1.8, 2 ]; % [I0, gam, Eg, n] PN diode
 %p0 = [2e-8, 2, 0.3, 2 ]; % [I0, gam, Esh, n] Schottky diode
