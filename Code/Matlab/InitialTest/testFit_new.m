@@ -7,16 +7,26 @@ chooseDiode = 4; % 1: PN diode, 2: Schottky diode, 3: Zener diode 1, 4: Zener di
 
 
 names = {'PN diode', 'Schottky diode', 'Zener diode 1', 'Zener diode 2'};
-filenames = { 'IV-T_dependence_20250404_100546/', 'IV-T_dependence_20250408_110423/', 'IV-T_dependence_20250408_124236/', 'IV-T_dependence_20250408_/' };
+filenames = { 'IV-T_dependence_20250404_100546/', 'IV-T_dependence_20250408_110423/', 'IV-T_dependence_20250408_124236/', 'IV-T_dependence_20250411_094932/' };
 dataPosition = strcat('../../../Data/', filenames{chooseDiode});
 %dataPosition = '../../../Data/IV-T_dependence_20250404_100546/';  % PN diode
 %dataPosition = '../../../Data/IV-T_dependence_20250408_110423/'; %Schottky diode
 %dataPosition = '../../../Data/IV-T_dependence_20250408_124236/'; % Zener diode 1
-%dataPosition = '../../../Data/IV-T_dependence_20250408_/'; % Zener diode 2
+%dataPosition = '../../../Data/IV-T_dependence_20250411_094932/'; % Zener diode 2
 
 temps = 16:1:70;
 
-offsets = [-1, 5]; % V
+switch chooseDiode
+    case 1
+        offsets = [-1, 5]; % PN diode
+    case 2
+        offsets = [-1, 5]; % Schottky diode
+    case 3
+        offsets = [-3, 5]; % Zener diode 1
+    case 4
+        offsets = [-5, 5]; % Zener diode 2
+end
+%offsets = [-1, 5]; % V
 n_pulls = 2;
 pulls = 0:n_pulls
 
@@ -90,9 +100,9 @@ currents = currents * 1e6; % A
 
 X = [voltages'; temperatures'];
 
-p0 = { { 2e-8, 3/2, 1.8, 2 }, { 2e-8, 2, 0.3, 2 }, {}, {} }; % [I0, gam, Eg, n] PN diode
+%p0 = { { 2e-8, 3/2, 1.8, 2 }, { 2e-8, 2, 0.3, 2 }, {}, {} }; % [I0, gam, Eg, n] PN diode
 
-%p0 = [2e-8, 3/2, 1.8, 2 ]; % [I0, gam, Eg, n] PN diode
+%p0 = [2e-8, 3/2, 1.1, 2 ]; % [I0, gam, Eg, n] PN diode
 %p0 = [2e-8, 2, 0.3, 2 ]; % [I0, gam, Esh, n] Schottky diode
 %p0 = [2e-8, 1.8, 1.8, 4 ]; % [I0, gam, Eg, n] Zener diode 1
 
@@ -103,22 +113,30 @@ p0 = { { 2e-8, 3/2, 1.8, 2 }, { 2e-8, 2, 0.3, 2 }, {}, {} }; % [I0, gam, Eg, n] 
 %beta
 switch chooseDiode
     case 1
-        p0 = [2e-8, 3/2, 1.8, 2 ]; % [I0, gam, Eg, n] PN diode
+        global p0
+        p0 = [2e-8, 3/2, 1.1, 2 ]; % [I0, gam, Eg, n] PN diode
         beta = nlinfit(X, currents', @PN_model, p0, 'Options', statset('MaxIter', 1000));
+        I_fit = PN_model(beta, X);
     case 2
+        global p0
         p0 = [2e-8, 2, 0.3, 2 ]; % [I0, gam, Esh, n] Schottky diode
         beta = nlinfit(X, currents', @Schottky_model, p0, 'Options', statset('MaxIter', 1000));
-    case 3
+        I_fit = Schottky_model(beta, X);
+        case 3
+        global p0
         p0 = [2e-8, 1.8, 1.8, 4 ]; % [I0, gam, Eg, n] Zener diode 1
         beta = nlinfit(X, currents', @Zener_model, p0, 'Options', statset('MaxIter', 1000));
+        I_fit = Zener_model(beta, X);
     case 4
+        global p0
         p0 = [2e-8, 1.8, 1.8, 4 ]; % [I0, gam, Eg, n] Zener diode 2
         beta = nlinfit(X, currents', @Zener_model, p0, 'Options', statset('MaxIter', 1000));
+        Zener_model
 end
 
 
 %I_fit = PN_model(beta, X);
-I_fit = Schottky_model(beta, X);
+%I_fit = Schottky_model(beta, X);
 
 
 
@@ -132,7 +150,7 @@ t1 = nexttile(t);
 plot3(temperatures, voltages, (currents'), 'ob', 'DisplayName', 'Raw Data')             % Raw Data
 hold on
 
-%plot3(X(2, :), X(1, :), PN_model(p0, X), 'or', 'DisplayName', 'PN p0')                 % PN p0
+plot3(X(2, :), X(1, :), PN_model(p0, X), 'og', 'DisplayName', 'PN p0')                 % PN p0
 %plot3(X(2, :), X(1, :), Schottky_model(p0, X), 'vg', 'DisplayName', 'Schottky p0')     % Schottky p0
 %plot3(X(2, :), X(1, :), Zener_model(p0, X), 'k', 'DisplayName', 'Zener p0')            % Zener p0
 
@@ -155,6 +173,8 @@ t2 = nexttile(t);
 plot3(temperatures, voltages, abs(currents'), 'ob', 'DisplayName', 'Raw Data')
 hold on
 plot3(X(2, :), X(1, :), abs(I_fit'), 'vr', 'DisplayName', 'Fitted Model')
+
+
 hold off
 grid on
 grid minor
