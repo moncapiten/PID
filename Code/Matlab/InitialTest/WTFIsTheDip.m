@@ -44,6 +44,22 @@ else
     ar_T_max = 1;
 end
 
+i0 = 0;
+f = 0;
+red_colors = ["#FFFF00", "#FFCC00", "#FF6600", "#CC0000", "#660000"];
+blue_colors = ["#00FFFF", "#00CCFF", "#0099FF", "#0033CC", "#000080"];
+legends = [];
+names = {};
+
+
+t = tiledlayout(1, 2, "TileSpacing", "Tight", "Padding", "Compact");
+t1 = nexttile(t);
+%t2 = nexttile(t);
+hold on
+
+minI = 1e5;
+minT = -1;
+
 
 counter = 0;
 first = true;
@@ -70,6 +86,55 @@ for T_direction = 1:ar_T_max
             Err_Id_return = raw_data(:, 15);
 
 
+
+            Vd_go = Vd_go(10:end);
+            Id_go = Id_go(10:end);
+            Vd_return = Vd_return(10:end);
+            Id_return = Id_return(10:end);
+
+
+
+            if( T >= 50 && T <= 54 )
+%            if( T >= 51 && T <= 53 )
+%            if( T >= 52 && T <= 52 )
+                if(f == 0)
+                    f = 1;
+                    i0 = T;
+                end
+
+                if(pull == 0 )
+                    if(T_direction == 1)
+                        h = plot(Vd_go, abs(Id_go)*1e6, '-', 'Color', red_colors(T-i0+1), 'Parent', t1);
+                        names{end+1} = strcat( 'T: ', num2str(T), ' C, pull: ', num2str(pull), ' (return) - T Go');
+                    else
+                        h = plot(Vd_go, abs(Id_go)*1e6, '-', 'Color', blue_colors(T-i0+1), 'Parent', t1);
+                        names{end+1} = strcat( 'T: ', num2str(T), ' C, pull: ', num2str(pull), ' (return) - T Return');
+                    end
+                    legends(end+1) = h;
+                else
+                    if(T_direction == 1)
+                        plot(Vd_go, abs(Id_go)*1e6, '-', 'Color', red_colors(T-i0+1), 'Parent', t1);
+                        plot(Vd_return, abs(Id_return)*1e6, '-', 'Color', red_colors(T-i0+1), 'Parent', t1);
+                    else
+                        plot(Vd_go, abs(Id_go)*1e6, '-', 'Color', blue_colors(T-i0+1), 'Parent', t1);
+                        plot(Vd_return, abs(Id_return)*1e6, '-', 'Color', blue_colors(T-i0+1), 'Parent', t1);
+                    end
+                end
+
+                
+            
+                if min(abs(Id_go)) < minI || min(abs(Id_return)) < minI
+                    minI = min([min(abs(Id_go)), min(abs(Id_return))]);
+                    minT = T;
+                end
+
+
+            end
+
+%            min(abs(Id_go)) < minI || min(abs(Id_return)) < minI
+            
+
+
             % add the data to the accumulation arrays
             
 
@@ -93,109 +158,15 @@ end
 counter * 50 * 2 % 50 voltages, 2 directions (V_go and V_return)
 
 
-set(gca, 'YScale', 'log')
-legend('show')
-
-
-
-temperatures = temperatures + 273.15; % C
-currents = currents * 1e6; % A
-
-
-X = [voltages'; temperatures'];
-
-%p0 = { { 2e-8, 3/2, 1.8, 2 }, { 2e-8, 2, 0.3, 2 }, {}, {} }; % [I0, gam, Eg, n] PN diode
-
-%p0 = [2e-8, 3/2, 1.1, 2 ]; % [I0, gam, Eg, n] PN diode
-%p0 = [2e-8, 2, 0.3, 2 ]; % [I0, gam, Esh, n] Schottky diode
-%p0 = [2e-8, 1.8, 1.8, 4 ]; % [I0, gam, Eg, n] Zener diode 1
-
-
-
-%beta = nlinfit(X, currents', @PN_model, p0, 'Options', statset('MaxIter', 1000));
-%beta = nlinfit(X, currents', @Schottky_model, p0, 'Options', statset('MaxIter', 1000));
-%beta
-switch chooseDiode
-    case 1
-        global p0
-        p0 = [2e-8, 3/2, 1.1, 2 ]; % [I0, gam, Eg, n] PN diode
-        beta = nlinfit(X, currents', @PN_model, p0, 'Options', statset('MaxIter', 1000));
-        I_fit = PN_model(beta, X);
-    case 2
-        global p0
-        p0 = [2e-8, 2, 0.3, 2 ]; % [I0, gam, Esh, n] Schottky diode
-        beta = nlinfit(X, currents', @Schottky_model, p0, 'Options', statset('MaxIter', 1000));
-        I_fit = Schottky_model(beta, X);
-        case 3
-        global p0
-        p0 = [2e-8, 1.8, 1.8, 4 ]; % [I0, gam, Eg, n] Zener diode 1
-        beta = nlinfit(X, currents', @Zener_model, p0, 'Options', statset('MaxIter', 1000));
-        I_fit = Zener_model(beta, X);
-    case 4
-        global p0
-        p0 = [2e-8, 1.8, 1.8, 4 ]; % [I0, gam, Eg, n] Zener diode 2
-        beta = nlinfit(X, currents', @Zener_model, p0, 'Options', statset('MaxIter', 1000));
-        Zener_model
-end
-
-
-%I_fit = PN_model(beta, X);
-%I_fit = Schottky_model(beta, X);
-
-
-
-
-
-
-t = tiledlayout(1, 2, "TileSpacing", "Tight", "Padding", "Compact");
-t1 = nexttile(t);
-
-%errorbar(Vd_go, Id_go, -Err_Id_go/2, Err_Id_go/2, -Err_Vd_go/2, Err_Vd_go/2, 'o', 'MarkerSize', 5, 'MarkerEdgeColor', 'blue')
-plot3(temperatures, voltages, (currents'), 'ob', 'DisplayName', 'Raw Data')             % Raw Data
-hold on
-
-%plot3(X(2, :), X(1, :), PN_model(p0, X), 'og', 'DisplayName', 'PN p0')                 % PN p0
-%plot3(X(2, :), X(1, :), Schottky_model(p0, X), 'vg', 'DisplayName', 'Schottky p0')     % Schottky p0
-%plot3(X(2, :), X(1, :), Zener_model(p0, X), 'k', 'DisplayName', 'Zener p0')            % Zener p0
-
-plot3(X(2, :), X(1, :), (I_fit'), 'vr', 'DisplayName', 'Fitted Model')                  % Fitted Model
-
-
-hold off
-grid on
-grid minor
-
-xlabel('Temperature [K]', 'Interpreter', 'latex', 'FontSize', 14)
-ylabel('Voltage [V]', 'Interpreter', 'latex', 'FontSize', 14)
-zlabel('Current ($ \mathrm{ \mu A } $) ', 'Interpreter', 'latex', 'FontSize', 14)
-title('Linear Plot', 'Interpreter', 'latex', 'FontSize', 16)
-legend()
-
-
-
-t2 = nexttile(t);
-plot3(temperatures, voltages, abs(currents'), 'ob', 'DisplayName', 'Raw Data')
-hold on
-plot3(X(2, :), X(1, :), abs(I_fit'), 'vr', 'DisplayName', 'Fitted Model')
-
-
-hold off
-grid on
-grid minor
-
-xlabel('Temperature [K]', 'Interpreter', 'latex', 'FontSize', 14)
-ylabel('Voltage [V]', 'Interpreter', 'latex', 'FontSize', 14)
-zlabel('Current ($ \mathrm{ \mu A } $) ', 'Interpreter', 'latex', 'FontSize', 14)
-title('Semilog Plot', 'Interpreter', 'latex', 'FontSize', 16)
-legend()
-set(gca, 'ZScale', 'log')
-
-
-title(t, strcat("IV-T curve for ", names{chooseDiode}), 'Interpreter', 'latex', 'FontSize', 18)
-
-
-
-
+minI
+minT
+grid on;
+grid minor;
+xlabel(t1, 'Voltage [V]', 'Interpreter', 'latex', 'FontSize', 14)
+ylabel(t1, 'Current [$ \mathrm{ \mu A} $]', 'Interpreter', 'latex', 'FontSize', 14)
+%title('IV characteristics', 'Interpreter', 'latex', 'FontSize', 18)
+set(t1, 'YScale', 'log')
+%legend( legends, names, 'Interpreter', 'latex', 'FontSize', 10, 'Location', 'nw')
 
 
 
