@@ -113,11 +113,11 @@ for T_direction = 1:ar_T_max
                     legends(end+1) = h;
                 else
                     if(T_direction == 1)
-                        plot(Vd_go, abs(Id_go)*1e6, '-', 'Color', red_colors(T-i0+1), 'Parent', t1);
-                        plot(Vd_return, abs(Id_return)*1e6, '-', 'Color', red_colors(T-i0+1), 'Parent', t1);
+                        plot(Vd_go, (Id_go)*1e6, '-', 'Color', red_colors(T-i0+1), 'Parent', t1);
+                        plot(Vd_return, (Id_return)*1e6, '-', 'Color', red_colors(T-i0+1), 'Parent', t1);
                     else
-                        plot(Vd_go, abs(Id_go)*1e6, '-', 'Color', blue_colors(T-i0+1), 'Parent', t1);
-                        plot(Vd_return, abs(Id_return)*1e6, '-', 'Color', blue_colors(T-i0+1), 'Parent', t1);
+                        plot(Vd_go, (Id_go)*1e6, '-', 'Color', blue_colors(T-i0+1), 'Parent', t1);
+                        plot(Vd_return, (Id_return)*1e6, '-', 'Color', blue_colors(T-i0+1), 'Parent', t1);
                     end
                 end
 
@@ -165,7 +165,7 @@ grid minor;
 xlabel(t1, 'Voltage [V]', 'Interpreter', 'latex', 'FontSize', 14)
 ylabel(t1, 'Current [$ \mathrm{ \mu A} $]', 'Interpreter', 'latex', 'FontSize', 14)
 %title('IV characteristics', 'Interpreter', 'latex', 'FontSize', 18)
-set(t1, 'YScale', 'log')
+%set(t1, 'YScale', 'log')
 %legend( legends, names, 'Interpreter', 'latex', 'FontSize', 10, 'Location', 'nw')
 
 
