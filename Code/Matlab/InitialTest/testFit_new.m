@@ -3,7 +3,7 @@ clc
 close all
 clear all;
 
-chooseDiode = 5; % 1: PN diode, 2: Schottky diode, 3: Zener diode 1, 4: Zener diode 2, 5: PN diode long take
+chooseDiode = 1; % 1: PN diode, 2: Schottky diode, 3: Zener diode 1, 4: Zener diode 2, 5: PN diode long take
 
 
 names = {'PN diode', 'Schottky diode', 'Zener diode 1', 'Zener diode 2', 'PN diode long take'};

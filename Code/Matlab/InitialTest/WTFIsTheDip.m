@@ -6,7 +6,7 @@ clear all;
 chooseDiode = 1; % 1: PN diode, 2: Schottky diode, 3: Zener diode 1, 4: Zener diode 2
 
 
-names = {'PN diode', 'Schottky diode', 'Zener diode 1', 'Zener diode 2', 'PN diode long take'};
+names = {'PN diode Short Take', 'Schottky diode', 'Zener diode 1', 'Zener diode 2', 'PN diode Long Take'};
 filenames = { 'IV-T_dependence_20250404_100546/', 'IV-T_dependence_20250408_110423/', 'IV-T_dependence_20250408_124236/', 'IV-T_dependence_20250411_094932/', 'IV-T_dependence_20250414_092701/' };
 dataPosition = strcat('../../../Data/', filenames{chooseDiode});
 
@@ -198,10 +198,10 @@ t2Legends = [];
 t2LegendsNames = {};
 
 hold on
-h = plot(Ts, minIsGo*1e6, 'o-', 'Color', red_colors(5));
-t2Legends = [t2Legends, h];
+h = plot(Ts(:, 1), minIsGo*1e6, 'o-', 'Color', red_colors(5));
+plot(Ts(:, 2), minIsRe*1e6, 'o-', 'Color', red_colors(5));
+t2Legends(end+1) = h;
 t2LegendsNames{end+1} = names{chooseDiode};
-plot(Ts, minIsRe*1e6, 'o-', 'Color', red_colors(5));
 grid on;
 grid minor;
 xlabel(t2, 'Temperature [K]', 'Interpreter', 'latex', 'FontSize', 14)
@@ -384,9 +384,9 @@ if log set(t3, 'YScale', 'log'); end
 xlim(t3, [0, 0.3])
 
 
-h = plot(t2, Ts, minIsGo*1e6, 'o-', 'Color', blue_colors(5));
-plot(Ts, minIsRe*1e6, 'o-', 'Color', blue_colors(5), 'Parent', t2);
-t2Legends = [t2Legends, h];
+h = plot(t2, Ts(:, 1), minIsGo*1e6, 'o-', 'Color', blue_colors(5));
+plot(Ts(:, 2), minIsRe*1e6, 'o-', 'Color', blue_colors(5), 'Parent', t2);
+t2Legends(end+1) = h;
 t2LegendsNames{end+1} = names{chooseDiode};
 
 %legend(t2, 'PN diode', 's', 'b', 'PN diode long take', 'Interpreter', 'latex', 'FontSize', 10, 'Location', 'nw')
@@ -400,7 +400,7 @@ legend(t2, t2Legends, t2LegendsNames, 'Interpreter', 'latex', 'FontSize', 10, 'L
 
 
 
-title(t, strcat("Current Dip Analysis in ", names{chooseDiode}), 'Interpreter', 'latex', 'FontSize', 18)
+title(t, strcat("Current Dip Analysis in PN Diode"), 'Interpreter', 'latex', 'FontSize', 18)
 
 title(t3, strcat("IV families in T - ", names{chooseDiode}), 'Interpreter', 'latex', 'FontSize', 16)
 title(t2, strcat("Current minimums on Temperature - "), 'Interpreter', 'latex', 'FontSize', 16)
