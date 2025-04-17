@@ -10,29 +10,15 @@ names = {'PN diode Short Take', 'Schottky diode', 'Zener diode 1', 'Zener diode 
 filenames = { 'IV-T_dependence_20250404_100546/', 'IV-T_dependence_20250408_110423/', 'IV-T_dependence_20250408_124236/', 'IV-T_dependence_20250411_094932/', 'IV-T_dependence_20250414_092701/' };
 dataPosition = strcat('../../../Data/', filenames{chooseDiode});
 
+ranges = [ [-1, 5], [-1, 5], [-3, 5], [-5, 5], [0, 5] ]; % offsets for each diode
+offsets = ranges(chooseDiode, :); % offsets for the chosen diode
+
+tempRanges = [ [16,1,70], [10,1,70], [10,1,70], [10,1,70], [10,0.5,70] ]; % temperature ranges for each diode
+temps = tempRanges(chooseDiode, 1):tempRanges(chooseDiode, 2):tempRanges(chooseDiode, 3); % temperatures for the chosen diode
+
+
 log = true;
 
-
-%temps = 16:1:70;
-
-switch chooseDiode
-    case 1
-        offsets = [-1, 5]; % PN diode
-        temps = 16:1:70;
-    case 2
-        offsets = [-1, 5]; % Schottky diode
-        temps = 10:1:70;
-    case 3
-        offsets = [-3, 5]; % Zener diode 1
-        temps = 10:1:70;
-    case 4
-        offsets = [-5, 5]; % Zener diode 2
-        temps = 10:1:70;
-    case 5
-        offsets = [0, 5]; % PN diode long take
-        temps = 10:0.5:70;
-end
-%offsets = [-1, 5]; % V
 n_pulls = 2;
 pulls = 0:n_pulls
 
@@ -44,11 +30,7 @@ temperatures = [];
 currents = [];
 
 
-if flag_return_T
-    ar_T_max = 2;
-else
-    ar_T_max = 1;
-end
+if flag_return_T ar_T_max = 2; else ar_T_max = 1; end
 
 i0 = 0;
 f = 0;
