@@ -3,17 +3,17 @@ clc
 close all
 clear all;
 
-chooseDiode = 4; % 1: PN diode, 2: Schottky diode, 3: Zener diode 1, 4: Zener diode 2
+chooseDiode = 2; % 1: PN diode, 2: Schottky diode, 3: Zener diode 1, 4: Zener diode 2, 5: PN diode long take
 
 
-names = {'PN diode short take', 'Schottky diode', 'Zener diode 1', 'Zener diode 2', 'PN diode long take'};
-filenames = { 'IV-T_dependence_20250404_100546/', 'IV-T_dependence_20250408_110423/', 'IV-T_dependence_20250408_124236/', 'IV-T_dependence_20250411_094932/', 'IV-T_dependence_20250414_092701/' };
+names = {'PN diode short take', 'Schottky diode', 'Zener diode 1', 'Zener diode 2', 'PN diode long take', 'Schottky diode long take'};
+filenames = { 'IV-T_dependence_20250404_100546/', 'IV-T_dependence_20250408_110423/', 'IV-T_dependence_20250408_124236/', 'IV-T_dependence_20250411_094932/', 'IV-T_dependence_20250414_092701/', 'IV-T_dependence_20250415_113544/' };
 dataPosition = strcat('../../../Data/', filenames{chooseDiode});
 
-ranges = [ [-1, 5]; [-1, 5]; [-3, 5]; [-5, 5]; [0, 5] ]; % offsets for each diode
+ranges = [ [-1, 5]; [-1, 5]; [-3, 5]; [-5, 5]; [0, 5]; [-1, 5] ]; % offsets for each diode
 offsets = ranges(chooseDiode, :); % offsets for the chosen diode
 
-tempRanges = [ [16,1,70]; [10,1,70]; [10,1,70]; [10,1,70]; [10,0.5,70] ]; % temperature ranges for each diode
+tempRanges = [ [16,1,70]; [10,1,70]; [10,1,70]; [10,1,70]; [10,0.5,70]; [10, 0.5, 70]]; % temperature ranges for each diode
 temps = tempRanges(chooseDiode, 1):tempRanges(chooseDiode, 2):tempRanges(chooseDiode, 3); % temperatures for the chosen diode
 
 n_pulls = 2;

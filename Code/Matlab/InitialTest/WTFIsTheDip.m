@@ -3,17 +3,17 @@ clc
 close all
 clear all;
 
-chooseDiode = 1; % 1: PN diode, 2: Schottky diode, 3: Zener diode 1, 4: Zener diode 2
+chooseDiode = 2; % 1: PN diode, 2: Schottky diode, 3: Zener diode 1, 4: Zener diode 2
 
 
-names = {'PN diode Short Take', 'Schottky diode', 'Zener diode 1', 'Zener diode 2', 'PN diode Long Take'};
-filenames = { 'IV-T_dependence_20250404_100546/', 'IV-T_dependence_20250408_110423/', 'IV-T_dependence_20250408_124236/', 'IV-T_dependence_20250411_094932/', 'IV-T_dependence_20250414_092701/' };
+names = {'PN diode Short Take', 'Schottky diode', 'Zener diode 1', 'Zener diode 2', 'PN diode Long Take', 'Schottky diode Long Take'};
+filenames = { 'IV-T_dependence_20250404_100546/', 'IV-T_dependence_20250408_110423/', 'IV-T_dependence_20250408_124236/', 'IV-T_dependence_20250411_094932/', 'IV-T_dependence_20250414_092701/', 'IV-T_dependence_20250415_113544/' };
 dataPosition = strcat('../../../Data/', filenames{chooseDiode});
 
-ranges = [ [-1, 5], [-1, 5], [-3, 5], [-5, 5], [0, 5] ]; % offsets for each diode
+ranges = [ [-1, 5]; [-1, 5]; [-3, 5]; [-5, 5]; [0, 5] ]; % offsets for each diode
 offsets = ranges(chooseDiode, :); % offsets for the chosen diode
 
-tempRanges = [ [16,1,70], [10,1,70], [10,1,70], [10,1,70], [10,0.5,70] ]; % temperature ranges for each diode
+tempRanges = [ [16,1,70]; [10,1,70]; [10,1,70]; [10,1,70]; [10,0.5,70] ]; % temperature ranges for each diode
 temps = tempRanges(chooseDiode, 1):tempRanges(chooseDiode, 2):tempRanges(chooseDiode, 3); % temperatures for the chosen diode
 
 
@@ -132,25 +132,6 @@ for T_direction = 1:ar_T_max
             m = find(abs(Id_return) == min(abs(Id_return)), 1, 'first');
             Ts = [Ts; Td_go(l), Td_return(m)];
 
-%            minIsGo = [minIsGo, min(abs(Id_go))];
-%            minIsRe = [minIsRe, min(abs(Id_return))];
-%            Ts = [Ts; T, T];
-
-%            end
-            
-
-
-            % add the data to the accumulation arrays
-            
-
-        
-
-%            voltages = [voltages ; Vd_go ; Vd_return];
-%            temperatures = [temperatures ; Td_go ; Td_return];
-%            currents = [currents ; Id_go ; Id_return];
-
-
-
 
 
 
@@ -163,16 +144,12 @@ end
 counter * 50 * 2 % 50 voltages, 2 directions (V_go and V_return)
 
 
-%minI
-%minT
 grid on;
 grid minor;
 xlabel(t1, 'Voltage [V]', 'Interpreter', 'latex', 'FontSize', 14)
 ylabel(t1, 'Current [$ \mathrm{ \mu A} $]', 'Interpreter', 'latex', 'FontSize', 14)
-%title('IV characteristics', 'Interpreter', 'latex', 'FontSize', 18)
 if log set(t1, 'YScale', 'log'); end
 xlim(t1, [0, 0.3])
-%legend( legends, legendsNames, 'Interpreter', 'latex', 'FontSize', 10, 'Location', 'nw')
 title(t1, strcat("IV families in T - ", names{chooseDiode}), 'Interpreter', 'latex', 'FontSize', 16)
 
 t2 = nexttile(t, [2, 1]);
@@ -231,9 +208,12 @@ xlim(t2, [30, 70])
 
 
 
+if chooseDiode == 1
+    chooseDiode = 5; % PN diode
+elseif chooseDiode == 2
+    chooseDiode = 6; % Schottky diode
+end
 
-
-chooseDiode = 5; % 1: PN diode, 2: Schottky diode, 3: Zener diode 1, 4: Zener diode 2, 5: PN diode long take
 dataPosition = strcat('../../../Data/', filenames{chooseDiode});
 f = 0;
 

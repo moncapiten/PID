@@ -3,10 +3,10 @@ clc
 close all
 clear all;
 
-chooseDiode = 1; % 1: PN diode, 2: Schottky diode, 3: Zener diode 1, 4: Zener diode 2, 5: PN diode long take
+chooseDiode = 6; % 1: PN diode, 2: Schottky diode, 3: Zener diode 1, 4: Zener diode 2, 5: PN diode long take, 6: Schottky diode long take
 
 
-names = {'PN diode', 'Schottky diode', 'Zener diode 1', 'Zener diode 2', 'PN diode long take'};
+names = {'PN diode', 'Schottky diode', 'Zener diode 1', 'Zener diode 2', 'PN diode long take', 'Schottky diode long take'};
 
 
 
@@ -32,8 +32,12 @@ switch chooseDiode
         offsets = [0, 5]; % PN diode long take
         temps = 10:0.5:70;
         dataPosition = '../../../Data/IV-T_dependence_20250414_092701/';  % PN diode long take
+    case 6
+        offsets = [-1, 5]; % Schottky diode long take
+        temps = 10:0.5:70;
+        dataPosition = '../../../Data/IV-T_dependence_20250415_113544/';  % Schottky diode long take
 end
-%offsets = [-1, 5]; % V
+
 n_pulls = 2;
 pulls = 0:n_pulls
 
@@ -148,6 +152,11 @@ switch chooseDiode
         p0 = [2e-8, 3/2, 1.1, 2 ]; % [I0, gam, Eg, n] PN diode long take
         beta = nlinfit(X, currents', @PN_model, p0, 'Options', statset('MaxIter', 1000));
         I_fit = PN_model(beta, X);
+    case 6
+        global p0
+        p0 = [2e-8, 2, 0.3, 2 ]; % [I0, gam, Esh, n] Schottky diode long take
+        beta = nlinfit(X, currents', @Schottky_model, p0, 'Options', statset('MaxIter', 1000));
+        I_fit = Schottky_model(beta, X);
 end
 
 
