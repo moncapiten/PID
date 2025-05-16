@@ -1,0 +1,22 @@
+
+FOLDER: IV-T_dependendence_YYYYMMDD_HHMMSS contain the files for each data pull at each temperature, both forward and reverse in voltage( description of the columns is present inside each file)
+    each folder also contains a log.txt file with timestamped logs from the program to follow the progress live and be able to reference in case the need should arise
+
+FILE: IV_T[TT.TT]_V[MIN]_[MAX]_[n]Pull_T[DIR]
+    - TT.TT is temperature at which the specific measurement was taken
+    - MIN and MAX are the extremes of the applied voltage
+    - n is the pull number 0-indexed
+    - DIR can be either Go or Return, if we are in the increasing or decreasing temperature arm
+
+IV-T_dependence_20250404_100546 - PN diode
+IV-T_dependence_20250408_110423 - Schottky diode
+IV-T_dependence_20250408_124236 - 1st Zener diode
+IV-T_dependence_20250411_094932 - 2nd Zener diode
+IV-T_dependence_20250414_092701 - PN diode long take
+IV-T_dependence_20250415_113544 - Schottky diode long take
+
+
+There's also files with a single IV take at room temperature in case of need.
+
+
+
