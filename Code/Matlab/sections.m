@@ -3,12 +3,12 @@ clc
 close all
 clear all;
 
-chooseDiode = 2; % 1: PN diode, 2: Schottky diode, 3: Zener diode 1, 4: Zener diode 2, 5: PN diode long take
+chooseDiode = 1; % 1: PN diode, 2: Schottky diode, 3: Zener diode 1, 4: Zener diode 2, 5: PN diode long take
 
 
 names = {'PN diode short take', 'Schottky diode', 'Zener diode 1', 'Zener diode 2', 'PN diode long take', 'Schottky diode long take'};
 filenames = { 'IV-T_dependence_20250404_100546/', 'IV-T_dependence_20250408_110423/', 'IV-T_dependence_20250408_124236/', 'IV-T_dependence_20250411_094932/', 'IV-T_dependence_20250414_092701/', 'IV-T_dependence_20250415_113544/' };
-dataPosition = strcat('../../../Data/', filenames{chooseDiode});
+dataPosition = strcat('../../Data/', filenames{chooseDiode});
 
 ranges = [ [-1, 5]; [-1, 5]; [-3, 5]; [-5, 5]; [0, 5]; [-1, 5] ]; % offsets for each diode
 offsets = ranges(chooseDiode, :); % offsets for the chosen diode
@@ -63,13 +63,13 @@ hold on
 grid on
 grid minor
 ylabel('$ I_d [ \mathrm{ \mu A }] $', 'Interpreter', 'latex', 'FontSize', 14)
-title('Projections of IV-T as family of curves with constant V', 'Interpreter', 'latex', 'FontSize', 16)
+title('Projections of IV-T as curves - constant V', 'Interpreter', 'latex', 'FontSize', 16)
 
 t2 = nexttile(t);
 hold on
 grid on
 grid minor
-title('Projections of IV-T as family of curves with constant T', 'Interpreter', 'latex', 'FontSize', 16)
+title('Projections of IV-T as curves - constant T', 'Interpreter', 'latex', 'FontSize', 16)
 
 t3 = nexttile(t);
 hold on

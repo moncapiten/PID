@@ -7,7 +7,7 @@ chooseDiode = 6; % 1: PN diode, 2: Schottky diode, 3: Zener diode 1, 4: Zener di
 
 
 names = {'PN diode', 'Schottky diode', 'Zener diode 1', 'Zener diode 2', 'PN diode long take', 'Schottky diode long take'};
-
+    
 
 
 threshold = 0.35; % V
@@ -190,6 +190,7 @@ switch chooseDiode
     case 6
         global p0
         p0 = [0.0154, 2, 0.2181, 3.2533 ];
+        % 0.0002    2.6306    0.2013    3.2521  
         %        p0 = [5.0998, 0.7876, 1 ]; % [I0, Esh, n] Schottky diode long take
 %        p0 = [2e-8, 2, 0.3, 2 ]; % [I0, gam, Esh, n] Schottky diode long take
 %        [beta, R, ~, CovB] = nlinfit(X, currents', @Schottky_model, p0, 'Options', statset('MaxIter', 1000));
